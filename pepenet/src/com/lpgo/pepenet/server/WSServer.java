@@ -9,24 +9,24 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 public class WSServer
 {
+	// region Variables
 	//private static int DEFAULT_SERVER_PORT = 80;
 	private int port;
-	private WebSocketServer wss;													//Websocket
-	private boolean isReady;
-	private List<Connection> clientSockets; 										//To save all the current WebSocket open connections
-	private int nClients; 															//Number of clients connected to our server
-	private int clientId; 															//To create a unique Id for each client (never decreased)
-	private ServerMSG servermsg;
+	private WebSocketServer wss;					//Websocket
+	private boolean isReady;						// A bool to check and see if the server is in a listening state or not
+	private List<Connection> clientSockets; 		//To save all the current WebSocket open connections
+	private int nClients; 							//Number of clients connected to our server
+	private int clientId; 							//To create a unique Id for each client (never decreased)
+	private ServerMSG servermsg;                    //For Bidirectional Communication mode
 	JAVAServer.platformCode pC;
+	// endregion
 	
-	//For Bidirectional Communication mode
 	public WSServer ( int port, ServerMSG servermsg, JAVAServer.platformCode pC )
 	{
 		this.port = port;
@@ -37,7 +37,7 @@ public class WSServer
 		startServer (  );
 		this.pC = pC;
 		System.out.println ( "Server IP: " + this.getIP (  ) );
-		this.servermsg = servermsg; 												//To call the methods of the the upper level class		
+		this.servermsg = servermsg; 				//To call the methods of the upper level class		
 	}
 	
 	public void startServer (  )
@@ -66,12 +66,24 @@ public class WSServer
 					clientSockets.add ( new Connection ( arg0, clientId ) );
 					
 					arg0.send ( "MSG_SEND_ID*" + clientId );
-//					System.out.println ( "Server sent MSG_SEND_ID*" + clientId );
-//					String msg = String.valueOf ( clientId ) + "*ACTIVATE";
-//					String[] values = msg.split ( "\\*" );
-//					servermsg.server.cop.receive ( values, servermsg.server.squirrel );
 				}
-				else servermsg.onMessage ( arg1 ); //High level message
+				else
+				{
+					int id = getIDFromSocket ( arg0 );
+					servermsg.onMessage ( id, arg1 ); //High level message
+				}
+			}
+			
+			public int getIDFromSocket ( WebSocket arg0 )
+			{
+				for ( Connection c : clientSockets )
+				{
+					if ( c.ws == arg0 )
+					{
+						return c.clientID;
+					}
+				}
+				return -1; // hopefully, we never get here
 			}
 			
 			@Override
@@ -89,7 +101,7 @@ public class WSServer
 		
 		wss.start (  ); //Start Server functionality
 		isReady = true;
-			System.out.println ( "Server started and ready." );
+		System.out.println ( "Server started and ready." );
 	}
 
 	public boolean isListening (  )
@@ -110,7 +122,7 @@ public class WSServer
 		}
 	}
 	
-	public boolean sendToClient ( int ID, String text ) //not tested already
+	public boolean sendToClient ( int ID, String text )
 	{	
 		for ( Connection c : clientSockets )
 		{
@@ -233,8 +245,10 @@ public class WSServer
 
 class Connection
 {
+	// region Variables
 	WebSocket ws;
 	int clientID;
+	// endregion
 	
 	public Connection ( WebSocket ws, int ID )
 	{
@@ -242,8 +256,8 @@ class Connection
 		this.clientID = ID;
 	}
 	
+	// region GettersNSetters
 	public WebSocket getWS   (  ) { return ws;       }
 	public int       getID   (  ) { return clientID; }
+	// endregion
 }
-//region NecTrash
-//endregion NecTrash
