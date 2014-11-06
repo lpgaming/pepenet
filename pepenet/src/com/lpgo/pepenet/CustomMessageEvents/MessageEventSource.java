@@ -19,7 +19,7 @@ public class MessageEventSource
 		listeners.remove ( listener );
 	}
 	
-	public void fireMessageReceived ( int clientID, String message )
+	public void fireMessageReceived ( int clientID, String message ) // This version is for the server
 	{
 		if ( listeners != null && !listeners.isEmpty (  ) )
 		{
@@ -34,7 +34,23 @@ public class MessageEventSource
 			}
 		}
 	}
-	
+
+	public void fireMessageReceived ( String message ) // This version is for the client
+	{
+		if ( listeners != null && !listeners.isEmpty (  ) )
+		{
+			PepenetMessageEvent messageEvent = new PepenetMessageEvent ( this, message );
+			
+			synchronized ( listeners )
+			{
+				for ( PepenetMessageEventListener pmel : listeners )
+				{
+					pmel.handleEvent ( messageEvent );
+				}
+			}
+		}
+	}
+
 	// region GettersNSetters
 
 	// endregion

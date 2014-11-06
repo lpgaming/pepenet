@@ -4,7 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
-import org.java_websocket.drafts.Draft_17; //This is the Standard WebSocket Implementation
+import org.java_websocket.drafts.Draft_17;            //This is the Standard WebSocket Implementation
 import org.java_websocket.handshake.ServerHandshake;
 
 public class WSClient implements ComClient 
@@ -15,9 +15,7 @@ public class WSClient implements ComClient
 	
 	//For the Client side only
 	private int myID;
-	private ClientMSG clientmsg;
-	
-	//For Bidirectional Communication mode
+	private ClientMSG clientmsg;     //For Bidirectional Communication mode
 	public WSClient ( String ip, int port, ClientMSG clientmsg, JAVAClient.platformCode pC )
 	{
 		this.port = port;
@@ -128,5 +126,3 @@ public class WSClient implements ComClient
 		connected = false;
 	}
 }
-//region NecTrash
-//endregion NecTrash

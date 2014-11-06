@@ -20,6 +20,13 @@ public class PepenetMessageEvent extends EventObject
 		this.message = message;
 	}
 
+	public PepenetMessageEvent ( MessageEventSource eventSource, String message )
+	{
+		super ( eventSource );
+		this.clientID = 0;
+		this.message = message;
+	}
+
 	// region GettersNSetters
 	public static long getSerialversionuid (  ) { return serialVersionUID; }
 	public int         getClientID         (  ) { return clientID;         }

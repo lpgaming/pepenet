@@ -44,19 +44,10 @@ public class JAVAServer
 	// When NOT using PNCME, this method is the choke point for all messages coming from clients to this server.
 	public void getMessage ( ClientMessageListing listing )
 	{
+		if ( !usingPNCME && messageFromClientList != null )
 		synchronized ( messageFromClientList )
 		{
-			// custom event fires here
-			if ( source != null )
-			{
-				// We're using the included PepeNet Custom Message Event handler
-				source.fireMessageReceived ( listing.getId (  ), listing.getMsg (  ) );
-				return; // make sure that we don't keep going
-			}
-			else if ( messageFromClientList != null )
-			{                                          // If you choose to pass a list instead of using the included Custom Message Event
-				messageFromClientList.add ( listing ); // You'll have to poll this list regularly, somehow, maybe in the main render loop? 
-			}
+			messageFromClientList.add ( listing ); // You'll have to poll this list regularly, somehow, maybe in the main render loop? 
 		}
 	}
 	
@@ -64,7 +55,7 @@ public class JAVAServer
 	public void getMessage ( int clientID, String msg )
 	{
 		// custom event fires here
-		if ( source != null )
+		if ( usingPNCME && source != null )
 		{
 			// We're using the included PepeNet Custom Message Event handler
 			source.fireMessageReceived ( clientID, msg );

@@ -17,9 +17,8 @@ public class GWTClient implements ComClient
 
 	//For the Client side only
 	private int myID;
-	private ClientMSG c;
+	private ClientMSG c;	//For Bidirectional Communication mode	
 	
-	//For Bidirectional Communication mode	
 	public GWTClient (String ip, int port, ClientMSG c)
 	{
 		this.port = port;
@@ -70,7 +69,7 @@ public class GWTClient implements ComClient
 						//SERVER SEND MY CLIENT ID.
 						else if (message.startsWith("MSG_SEND_ID"))
 						{
-							String [] values = message.split("\\s+"); //splitter with the " " separator
+							String [] values = message.split("\\*"); //splitter with the " " separator
 							myID = Integer.valueOf(values[1]);
 						}
 						//High level Message, send to the ClientMSG class

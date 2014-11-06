@@ -8,5 +8,3 @@ public interface ComClient
 	public int getId (  );
 	public void close (  );
 }
-//region NecTrash
-//endregion NecTrash
