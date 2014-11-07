@@ -9,12 +9,12 @@ public class MessageEventSource
 	private List<PepenetMessageEventListener> listeners = new ArrayList<PepenetMessageEventListener> (  );
 	// endregion
 
-	synchronized void addListener ( PepenetMessageEventListener listener )
+	public synchronized void addListener ( PepenetMessageEventListener listener )
 	{
 		listeners.add ( listener );
 	}
 	
-	synchronized void removeListener ( PepenetMessageEventListener listener )
+	public synchronized void removeListener ( PepenetMessageEventListener listener )
 	{
 		listeners.remove ( listener );
 	}
