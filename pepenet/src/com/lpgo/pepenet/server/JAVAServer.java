@@ -86,6 +86,11 @@ public class JAVAServer
 	{
 		serverMSG.sendMessageToAll ( message );
 	}
+	
+	public void serverShutdown (  )
+	{
+		serverMSG.close (  );
+	}
 
 	// region GettersNSetters
 	public List<ClientMessageListing> getMessageFromClientList (  ) { return messageFromClientList; }
