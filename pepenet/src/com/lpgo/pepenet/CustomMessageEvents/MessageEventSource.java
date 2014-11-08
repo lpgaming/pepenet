@@ -52,7 +52,7 @@ public class MessageEventSource
 	}
 
 	// region GettersNSetters
-	public List<PepenetMessageEventListener> getListeners() { return listeners; }
+	public List<PepenetMessageEventListener> getListeners (  ) { return listeners; }
 
 	// endregion
 }

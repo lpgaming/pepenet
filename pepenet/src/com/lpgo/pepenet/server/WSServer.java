@@ -87,15 +87,15 @@ public class WSServer
 			}
 			
 			@Override
-			public void onError ( WebSocket arg0, Exception arg1 )
-			{
-				System.out.println ( "Server Error " + arg1 );
-			}
-			
-			@Override
 			public void onClose ( WebSocket arg0, int arg1, String arg2, boolean arg3 )
 			{
 				closeConnection ( arg0 );
+			}
+
+			@Override
+			public void onError ( WebSocket arg0, Exception arg1 )
+			{
+				System.out.println ( "Server Error " + arg1 );
 			}
 		};
 		

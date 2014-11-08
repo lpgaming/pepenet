@@ -69,6 +69,7 @@ public class WSClient implements ComClient
 					{
 						String [] values = message.split ( "\\*" ); //splitter with the " " separator
 						myID = Integer.valueOf ( values[1] );
+						clientmsg.client.setMyID ( myID );
 						System.out.println ( "myID = " + myID );
 					}
 					//High level Message, send to the ClientMSG class
