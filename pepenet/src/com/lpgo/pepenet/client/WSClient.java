@@ -2,6 +2,7 @@ package com.lpgo.pepenet.client;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_17;            //This is the Standard WebSocket Implementation
@@ -56,7 +57,7 @@ public class WSClient implements ComClient
 				@Override
 				public void onMessage( String message )
 				{
-					
+					System.out.println ( "Client receives:  " + message );
 					//Low level control of Messages received from server
 					//SERVER CLOSES MY WS CONNECTION.
 					if ( message.equals ( "MSG_CLOSE_WS" ) ) 
@@ -105,6 +106,7 @@ public class WSClient implements ComClient
 	{
 		if ( connected )
 		{
+			System.out.println ( "\nClient sends:  " + msg );
 			wsclient.send ( msg );
 			return true;
 		}

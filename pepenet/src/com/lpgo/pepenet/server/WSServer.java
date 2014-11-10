@@ -116,7 +116,7 @@ public class WSServer
 			for ( Connection c : clientSockets )
 			{
 				if ( c.getWS (  ).isOpen (  ) ) { c.getWS (  ).send ( text ); }
-				System.out.println ( "Server send to all:" + c.getWS (  ).isOpen (  ) + "  " + text );
+				System.out.println ( "Server sends to all:" + c.getWS (  ).isOpen (  ) + "  " + text );
 				//We must ONLY send the message if the WS is Open.
 			}
 		}
@@ -129,7 +129,7 @@ public class WSServer
 			if ( c.getID (  ) == ID )
 			{
 				c.getWS (  ).send ( text );
-				System.out.println ( "Server send to: " + ID + " " + text );
+				System.out.println ( "Server sends to client " + ID + ": " + text );
 				return true;
 			}
 		}
