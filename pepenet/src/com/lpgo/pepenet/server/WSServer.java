@@ -96,6 +96,7 @@ public class WSServer
 			public void onError ( WebSocket arg0, Exception arg1 )
 			{
 				System.out.println ( "Server Error " + arg1 );
+				arg1.printStackTrace (  );
 			}
 		};
 		
